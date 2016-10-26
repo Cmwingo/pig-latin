@@ -22,26 +22,30 @@ function isVowel(letter){
     } else {
       return false;
     }
-}
+};
 
 function translate(userInput) {
 
-  var userInputSlice = userInput.split();
+  var userInputSplit = userInput.split("");
   var translation = "";
+  var leadingConsonants = [];
 
   for(i = 0; i < userInput.length; i++) {
-    if(isVowel(userInput[i])) {
+    if(isVowel(userInput[0])) {
       translation = userInput + "ay";
       return translation;
-    } else {
-      return translation;
+    } else if(isVowel(userInput[i])){
+        leadingConsonants = userInputSplit.slice(0,i);
+        console.log(leadingConsonants);
+        return translation;
     }
   }
-}
+};
+
 
 function errorCheck (userInput) {
 
-var userInputSlice = userInput.split();
+var userInputSplit = userInput.split("");
 
   if (!userInput){
     alert("Please enter a sentence to translate");
@@ -56,11 +60,11 @@ var userInputSlice = userInput.split();
 
 function isLetter(x) {
   return x.toUpperCase() != x.toLowerCase();
-}
+};
 
 function isSentence(sentence){
 
-  var sentenceSlice = sentence.split();
+  var sentenceSlice = sentence.split("");
   for(i = 0; i < sentenceSlice.length; i++){
 
     var character = sentenceSlice[i];
@@ -70,4 +74,4 @@ function isSentence(sentence){
     }
   }
   return true;
-}
+};
