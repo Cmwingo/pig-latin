@@ -2,20 +2,28 @@ $(document).ready(function(){
   $("form").submit(function(event){
     event.preventDefault();
 
-    var userInput = $("input#english").val();
+    var userSentence = $("input#english").val();
+    var words = userSentence.split(" ");
+    var translatedWords = [];
+    var userInput = "";
     var translation = "";
     console.log(isVowel(userInput[0]));
-    if(!errorCheck(userInput)){
-      translation = translate(userInput);
+    for(y = 0; y < words.length; y++){
+      userInput = words[y];
+      if(!errorCheck(userInput)){
+        translation = translate(userInput);
+        console.log(translation);
+        translatedWords.push(translation);
+      }
     }
 
-    console.log(translation);
+    console.log(translatedWords);
 
   });
 });
 
 function isVowel(letter){
-  var vowels = ('aeiouAEIOU');
+  var vowels = ('aeiouyAEIOUY');
 
     if (vowels.indexOf(letter) > -1) {
       return true;
@@ -27,9 +35,7 @@ function isVowel(letter){
 function translate(userInput) {
 
   var userInputSplit = userInput.split("");
-  var translation = "";
   var leadingConsonants = [];
-  var translationArray = [];
   var consonant = "";
 
   for(i = 0; i < userInput.length; i++) {
@@ -39,14 +45,12 @@ function translate(userInput) {
     } else if(userInput[0] === "y" || userInput[0] === "Y") {
         consonant = userInputSplit.shift();
         leadingConsonants.push(consonant);
-        translationArray = userInputSplit.concat(leadingConsonants);
-        translation = translationArray.join("") + "ay";
+        translation = resolveWord(userInputSplit, leadingConsonants);
         return translation;
     } else if(isVowel(userInput[i])){
         console.log(leadingConsonants);
         console.log(userInputSplit);
-        translationArray = userInputSplit.concat(leadingConsonants);
-        translation = translationArray.join("") + "ay";
+        translation = resolveWord(userInputSplit, leadingConsonants);
         return translation;
     } else if(userInput[i] === "q" || userInput[i] === "Q") {
         if(userInput[i+1] === "u" || userInput[i+1] === "U") {
@@ -95,3 +99,12 @@ function isSentence(sentence){
   }
   return true;
 };
+
+function resolveWord(wordBase, leadingConsonants) {
+  var translationArray = [];
+  var translation = "";
+
+  translationArray = wordBase.concat(leadingConsonants);
+  translation = translationArray.join("") + "ay";
+  return translation;
+}
