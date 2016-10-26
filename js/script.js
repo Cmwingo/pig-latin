@@ -4,21 +4,12 @@ $(document).ready(function(){
 
     var userSentence = $("input#english").val();
     var words = userSentence.split(" ");
-    var translatedWords = [];
     var userInput = "";
     var translation = "";
-    console.log(isVowel(userInput[0]));
-    for(y = 0; y < words.length; y++){
-      userInput = words[y];
-      if(!errorCheck(userInput)){
-        translation = translate(userInput);
-        console.log(translation);
-        translatedWords.push(translation);
-      }
-    }
+    var result = "";
 
-    console.log(translatedWords);
-
+    result = translateSentence(words);
+    $(".translation-result").text(result);
   });
 });
 
@@ -48,8 +39,6 @@ function translate(userInput) {
         translation = resolveWord(userInputSplit, leadingConsonants);
         return translation;
     } else if(isVowel(userInput[i])){
-        console.log(leadingConsonants);
-        console.log(userInputSplit);
         translation = resolveWord(userInputSplit, leadingConsonants);
         return translation;
     } else if(userInput[i] === "q" || userInput[i] === "Q") {
@@ -103,8 +92,26 @@ function isSentence(sentence){
 function resolveWord(wordBase, leadingConsonants) {
   var translationArray = [];
   var translation = "";
+  var result = "";
 
   translationArray = wordBase.concat(leadingConsonants);
   translation = translationArray.join("") + "ay";
   return translation;
+};
+
+function translateSentence(words) {
+
+  var translatedWords = [];
+  var translation = "";
+
+  for(y = 0; y < words.length; y++){
+    userInput = words[y];
+    if(!errorCheck(userInput)){
+      translation = translate(userInput);
+      translatedWords.push(translation);
+    }
+  }
+  result = translatedWords.join(" ");
+  console.log(translatedWords);
+  return result;
 }
