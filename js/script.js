@@ -29,15 +29,35 @@ function translate(userInput) {
   var userInputSplit = userInput.split("");
   var translation = "";
   var leadingConsonants = [];
+  var translationArray = [];
+  var consonant = "";
 
   for(i = 0; i < userInput.length; i++) {
     if(isVowel(userInput[0])) {
       translation = userInput + "ay";
       return translation;
-    } else if(isVowel(userInput[i])){
-        leadingConsonants = userInputSplit.slice(0,i);
-        console.log(leadingConsonants);
+    } else if(userInput[0] === "y" || userInput[0] === "Y") {
+        consonant = userInputSplit.shift();
+        leadingConsonants.push(consonant);
+        translationArray = userInputSplit.concat(leadingConsonants);
+        translation = translationArray.join("") + "ay";
         return translation;
+    } else if(isVowel(userInput[i])){
+        console.log(leadingConsonants);
+        console.log(userInputSplit);
+        translationArray = userInputSplit.concat(leadingConsonants);
+        translation = translationArray.join("") + "ay";
+        return translation;
+    } else if(userInput[i] === "q" || userInput[i] === "Q") {
+        if(userInput[i+1] === "u" || userInput[i+1] === "U") {
+          consonant = "qu";
+          userInputSplit.shift();
+          userInputSplit.shift();
+          leadingConsonants.push(consonant);
+        }
+    } else {
+      consonant = userInputSplit.shift();
+      leadingConsonants.push(consonant);
     }
   }
 };
