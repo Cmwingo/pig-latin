@@ -33,7 +33,7 @@ function translate(userInput) {
     if(isVowel(userInput[0])) {
       translation = userInput + "ay";
       return translation;
-    } else if(userInput[0] === "y" || userInput[0] === "Y") {
+    } else if(userInput[0].toLowerCase() === "y") {
         consonant = userInputSplit.shift();
         leadingConsonants.push(consonant);
         translation = resolveWord(userInputSplit, leadingConsonants);
@@ -41,8 +41,8 @@ function translate(userInput) {
     } else if(isVowel(userInput[i])){
         translation = resolveWord(userInputSplit, leadingConsonants);
         return translation;
-    } else if(userInput[i] === "q" || userInput[i] === "Q") {
-        if(userInput[i+1] === "u" || userInput[i+1] === "U") {
+    } else if(userInput[i].toLowerCase() === "q") {
+        if(userInput[i+1].toLowerCase() === "u") {
           consonant = "qu";
           userInputSplit.shift();
           userInputSplit.shift();
@@ -112,6 +112,5 @@ function translateSentence(words) {
     }
   }
   result = translatedWords.join(" ");
-  console.log(translatedWords);
   return result;
 }
